@@ -1,0 +1,96 @@
+artisan make:model Customer -m
+
+artisan make:controller Api/CustomerController --resource --api --model=Customer
+
+php artisan make:resource CustomerResource
+
+php artisan make:request CustomerRequest
+
+
+/routes/api.php
+
++
+Route::apiResource('customers', CustomerController::class);
+
+class CustomerController extends Controller
+{
+
+    public function index()
+    {
+        return CustomerResource::collection(Customer::all());
+    }
+
+    public function store(CustomerRequest $request)
+    {
+        $customer = new Customer($request->validated());
+
+        return new CustomerResource($customer);
+    }
+...
+
+
+
+
+//////////// TESTS
+
+artisan make:test ApiCustomerTest
+
+
+class ApiCustomerTest extends TestCase
+{
+
+    use RefreshDatabase;
+
+    public function  test_customer_store()
+    {
+
+        $data = [
+            'name' => 'John',
+            'email' => 'john@mail.com',
+            'phone' => '+380660646332',
+            'address' => 'str John',
+            'is_legal' => true,
+            'code'      => '222',
+            'contact_name'=> 'Mary',
+            'contact_email'=> 'mary@mail.com',
+            'contact_phone'=> '+380660646300'
+        ];
+
+        $response = $this->postJson('api/customers',$data);
+
+
+        $response->assertStatus(201)
+          ->assertJson([
+            'data' => $data
+        ]);
+
+    }
+
+    public function  test_customer_get()
+    {
+
+        $data = [
+            'name' => 'John',
+            'email' => 'john@mail.com',
+            'phone' => '+380660646332',
+            'address' => 'str John',
+            'is_legal' => true,
+            'code'      => '222',
+            'contact_name'=> 'Mary',
+            'contact_email'=> 'mary@mail.com',
+            'contact_phone'=> '+380660646300'
+        ];
+
+        $response = $this->postJson('api/customers',$data);
+
+        $response->assertStatus(201)
+
+        $response = $this->getJson('api/customers');
+
+        //$response->dump();
+
+        $response->assertStatus(200);
+
+    }
+}
+
