@@ -94,3 +94,43 @@ class ApiCustomerTest extends TestCase
     }
 }
 
+/////////////////////////////////////
+
+
+
+resources/js/router/index.js
+
+import { createRouter, createWebHistory } from 'vue-router'
+
+/* импортируем все что будет роутиться? */
+import CompaniesIndex from '@/components/companies/CustomersIndex.vue'
+
+
+/* тут будут все роуты? */
+const routes = [
+    {
+        path: '/dashboard',
+        name: 'companies.index',
+        component: CustomersIndex
+    }
+];
+
+
+/* экспорт этих самых проутеров, которые выше? */
+export default createRouter({
+    history: createWebHistory(),
+    routes
+})
+
+
+
+
+
+
+resources/js/components/CustomersIndex.vue
+<template>...</template>
+
+resource/views/dashboard.blade.php
+...
+<router-view />
+....
