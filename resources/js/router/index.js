@@ -19,3 +19,4 @@ export default createRouter({
     history: createWebHistory(),
     routes
 })
+
