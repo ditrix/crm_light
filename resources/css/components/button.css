@@ -1,0 +1,22 @@
+
+.btn {
+    border-radius: 5px;
+    padding: 0.5rem 0.8rem;
+}
+
+.btn_blue {
+    background-color: blue;
+    color: white;
+}
+
+
+.btn_green {
+    background-color: green;
+    color: white;
+}
+
+.btn_red {
+    background-color: red;
+    color: white;
+}
+

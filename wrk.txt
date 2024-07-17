@@ -150,3 +150,34 @@ const formatDate = (date) => {
 };
 ....
 </script>
+
+/////////////// JS Helpers
+
+make resources/js/helpers/date.js
+import moment from 'moment';
+
+export function formatDate(date) {
+  return moment(date).format('DD.MM.YYYY');
+}
+use in vue
+...
+{{formatDate(datetime)}}
+<script setup>
+...
+import {formatDate} from '@/helpers/date'
+....
+</script>
+
+//////////////// Custom styles
+./vendor/bin/sail npm install postcss-import --save-dev
+
+/resource/app.css
+...
+@import "components/button.css";
+@import "components/greed.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+...
+

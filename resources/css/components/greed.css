@@ -1,0 +1,10 @@
+
+.greed_thead {
+    border: 1px lightgray solid; padding: 3rem;
+    background-color: beige;
+}
+
+.greed_tr {
+    border-bottom: 1px lightgray solid;;
+}
+
