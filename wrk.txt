@@ -123,7 +123,9 @@ export default createRouter({
 })
 
 
-
+////////////////////////// FAKE data
+php artisan make:factory
+next from examples
 
 
 
@@ -134,3 +136,17 @@ resource/views/dashboard.blade.php
 ...
 <router-view />
 ....
+
+CustomersIndex.vue (show dates on table )
+
+./vendor/bin/sail npm install moment
+
+<script setup>
+...
+import moment from 'moment'
+...
+const formatDate = (date) => {
+    return moment(date).format('DD.MM.YYYY');
+};
+....
+</script>
