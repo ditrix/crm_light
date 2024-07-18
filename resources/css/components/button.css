@@ -16,7 +16,16 @@
 }
 
 .btn_red {
-    background-color: red;
+    background-color: lightcoral;
     color: white;
 }
 
+.btn-outline-danger {
+    color: red !important;
+}
+
+
+.btn_gray {
+    background-color: grey;
+    color: white;
+}

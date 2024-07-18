@@ -13,9 +13,16 @@ export default function useCustomers () {
     const getCustomers = async () => {
         let response = await axios.get('/api/customers');
         customers.value = response.data.data;
+    };
+
+    const destroyCustomer = async (id) => {
+        let response = await axios.delete(`/api/customers/${id}`);
+
     }
+
     return {
         customers,
-        getCustomers
+        getCustomers,
+        destroyCustomer,
     };
 };
