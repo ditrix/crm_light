@@ -1,6 +1,7 @@
 @import "components/button.css";
 @import "components/greed.css";
 @import "components/helpers.css";
+@import "components/widgets.css";
 
 @tailwind base;
 @tailwind components;
