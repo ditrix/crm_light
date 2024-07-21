@@ -101,12 +101,95 @@
         </div>
 </div>
 </form>
+<hr>
+
+<div class="mt-6 px-6 py-6" style="border: 1px lightgray solid; border-radius: 5px;">
+
+    <div class="">Deals</div>
+
+
+    <table class="min-w-full  border divide-y divide-gray-300 grid_table">
+        <thead class="greed_thead">
+            <tr>
+                <th class="text-sm text-gray-600 py-2">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    ID
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    TYPE
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600 py-2">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    TITLE
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    ACTIVE
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600 py-2">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    DATE FROM
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    DATE TO
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600 py-2">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    UPDATED AT
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    CREATED AT
+                    </span>
+                </th>
+                <th class="text-sm text-gray-600">
+                    <span
+                    class="text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase">
+                    ACTION
+                    </span>
+                </th>
+            </tr>
+        </thead>
+    <template v-for="deal in customer.deals">
+    <tr class="bg-white greed_tr">
+        <td class="px-6 py-1 leading-5 ">{{ deal.id }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ deal.type }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ deal.title }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ deal.is_active }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.date_from) }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.date_to) }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.updated_at) }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.created_at) }}</td>
+        <td class="px-6 py-1 leading-5 "></td>
+    </tr>
+    </template>
+    </table>
+</div>
+
 
 </template>
 
 <script setup>
 import useCustomers from '@/composables/customers'
 import { onMounted } from 'vue';
+import { formatDate } from '@/helpers/date'
 
 const { errors, customer, showCustomer, updateCustomer } = useCustomers();
 

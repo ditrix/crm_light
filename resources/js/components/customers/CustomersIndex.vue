@@ -1,5 +1,5 @@
 <template>
-    <h3>{{title}}</h3>
+    <h3>Customers</h3>
 
     <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
         <div class="d-flex mb-4 px-5 mr-1 justify_content_right">
