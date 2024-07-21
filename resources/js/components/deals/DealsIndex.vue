@@ -1,0 +1,3 @@
+<template>
+    is deals
+</template>

@@ -27,7 +27,8 @@ class CustomerController extends Controller
 
     public function show(Customer $customer)
     {
-        return new CustomerResource($customer);
+
+        return new CustomerResource(Customer::with('deals')->find($customer->id));
     }
 
 

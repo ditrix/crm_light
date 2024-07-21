@@ -5,6 +5,10 @@ import CustomersIndex from '../components/customers/CustomersIndex.vue';
 import CustomerShow from '../components/customers/CustomerShow.vue';
 import CustomerCreate from '../components/customers/CustomerCreate.vue';
 
+import DealsIndex from '../components/deals/DealsIndex.vue';
+import DealShow from '../components/deals/DealShow.vue';
+import DealCreate from '../components/deals/DealCreate.vue';
+
 
 /* тут будут все роуты */
 const routes = [
@@ -24,6 +28,26 @@ const routes = [
     {
         path: '/customers/create',
         name: 'customers.store',
+        title: 'Customers',
+        component: CustomerCreate
+    },
+
+    {
+        path: '/deals',
+        name: 'deals.index',
+        title: 'Customers',
+        component: CustomersIndex
+    },
+    {
+        path: '/deals/:id/show',
+        name: 'deals.show',
+        title: 'Customers',
+        component: CustomerShow,
+        props: true,
+    },
+    {
+        path: '/deals/create',
+        name: 'deals.store',
         title: 'Customers',
         component: CustomerCreate
     },

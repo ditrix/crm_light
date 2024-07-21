@@ -24,5 +24,10 @@ class DatabaseSeeder extends Seeder
         // $this->call([
         //     InitDevCustomersSeeder::class
         // ]);
+/*
+        $this->call([
+            InitDevDealsSeeder::class
+        ]);
+        */
     }
 }
