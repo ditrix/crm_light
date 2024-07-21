@@ -163,3 +163,178 @@ class DictonaryResource extends JsonResource
 ```
 
 Этот пример показывает, как можно реализовать CRUD функционал, включая просмотр и редактирование связанных элементов. Вы можете использовать Eloquent relationships для загрузки связанных данных, и ресурсы для представления данных в формате JSON. Представления (blade или vue) позволяют редактировать связанные элементы через формы и отправлять их обратно на сервер для обновления.
+
+----------
+
+
+
+Использование реестров позволяет вам вынести бизнес-логику и доступ к данным из контроллеров, сделав их более чистыми и простыми для тестирования. Реестры могут быть реализованы как сервисы, которые инкапсулируют логику работы с моделями.
+
+### Создание Реестров
+
+#### MasterRegistry
+
+Создайте реестр для работы с `Master`:
+
+```php
+namespace App\Registries;
+
+use App\Models\Master;
+
+class MasterRegistry
+{
+    public function getAll()
+    {
+        return Master::all();
+    }
+
+    public function findById($id)
+    {
+        return Master::findOrFail($id);
+    }
+}
+```
+
+#### DetailRegistry
+
+Создайте реестр для работы с `Detail`:
+
+```php
+namespace App\Registries;
+
+use App\Models\Detail;
+
+class DetailRegistry
+{
+    public function findById($id)
+    {
+        return Detail::findOrFail($id);
+    }
+
+    public function update($id, array $data)
+    {
+        $detail = Detail::findOrFail($id);
+        $detail->update($data);
+        return $detail;
+    }
+}
+```
+
+### Обновление Контроллеров
+
+Теперь используйте эти реестры в контроллере. Внедрите их через конструктор.
+
+#### DetailController
+
+```php
+namespace App\Http\Controllers;
+
+use App\Registries\MasterRegistry;
+use App\Registries\DetailRegistry;
+use Illuminate\Http\Request;
+
+class DetailController extends Controller
+{
+    protected $masterRegistry;
+    protected $detailRegistry;
+
+    public function __construct(MasterRegistry $masterRegistry, DetailRegistry $detailRegistry)
+    {
+        $this->masterRegistry = $masterRegistry;
+        $this->detailRegistry = $detailRegistry;
+    }
+
+    public function edit($id)
+    {
+        $detail = $this->detailRegistry->findById($id);
+        $masters = $this->masterRegistry->getAll();
+        return view('details.edit', compact('detail', 'masters'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->detailRegistry->update($id, $request->all());
+        return redirect()->route('details.show', $id);
+    }
+}
+```
+
+### Обновление Представлений
+
+Представление `details/edit.blade.php` остается таким же, как и раньше:
+
+#### details/edit.blade.php
+
+```html
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h1>Edit Detail</h1>
+
+    <form method="POST" action="{{ route('details.update', $detail->id) }}">
+        @csrf
+        @method('PUT')
+
+        <div class="form-group">
+            <label for="master_id">Master</label>
+            <select name="master_id" class="form-control">
+                @foreach($masters as $master)
+                    <option value="{{ $master->id }}" {{ $detail->master_id == $master->id ? 'selected' : '' }}>
+                        {{ $master->master_info }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="dictonary_id">Dictionary</label>
+            <select name="dictonary_id" class="form-control">
+                @foreach($dictionaries as $dictionary)
+                    <option value="{{ $dictionary->id }}" {{ $detail->dictonary_id == $dictionary->id ? 'selected' : '' }}>
+                        {{ $dictionary->dictonary_info }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+@endsection
+```
+
+### Регистрация Реестров в Сервис-провайдере
+
+Не забудьте зарегистрировать ваши реестры в сервис-провайдере, чтобы Laravel мог автоматически внедрять их в контроллеры.
+
+#### AppServiceProvider
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use App\Registries\MasterRegistry;
+use App\Registries\DetailRegistry;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        $this->app->singleton(MasterRegistry::class, function ($app) {
+            return new MasterRegistry();
+        });
+
+        $this->app->singleton(DetailRegistry::class, function ($app) {
+            return new DetailRegistry();
+        });
+    }
+
+    public function boot()
+    {
+        //
+    }
+}
+```
+
+Таким образом, вы выносите бизнес-логику и работу с данными в отдельные классы (реестры), оставляя контроллеры чистыми и ответственными только за обработку HTTP-запросов и передачу данных в представления.

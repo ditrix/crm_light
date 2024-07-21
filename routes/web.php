@@ -2,10 +2,19 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\DebugController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/test', function () {
+
+// });
+
+Route::get('/debug',  [DebugController::class, 'index'])->name('debug');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
