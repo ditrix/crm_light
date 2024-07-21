@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('deals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable();
-            $table->string('name');
+            $table->string('title');
             $table->string('type');
-            $table->boolean('is_active');
-            $table->date('active_from');
-            $table->date('active_to');
+            $table->boolean('is_active')->default(false);
+            $table->date('active_from')->nullable();
+            $table->date('active_to')->nullable();
             $table->timestamps();
         });
     }
