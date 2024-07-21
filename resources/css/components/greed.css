@@ -8,3 +8,12 @@
     border-bottom: 1px lightgray solid;;
 }
 
+.grid_table td {
+    font-size: 0.8rem;
+    color: black;
+    /* padding: 0.2rem 0.5rem; */
+}
+
+.grid_table tr:hover {
+    background-color:azure;
+}

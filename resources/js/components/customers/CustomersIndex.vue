@@ -10,7 +10,7 @@
             </router-link>
         </div>
 
-        <table class="min-w-full  border divide-y divide-gray-300">
+        <table class="min-w-full  border divide-y divide-gray-300 grid_table">
             <thead class="greed_thead">
             <tr>
                 <th class="text-sm text-gray-600 py-2">
@@ -60,13 +60,13 @@
             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
             <template v-for="customer in customers" :key="customer.id">
                 <tr class="bg-white greed_tr">
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ customer.id }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ customer.name }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ customer.email }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ customer.phone }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ formatDate(customer.updated_at) }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">{{ formatDate(customer.created_at) }}</td>
-                    <td class="px-6 py-1 text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                    <td class="px-6 py-1 leading-5 ">{{ customer.id }}</td>
+                    <td class="px-6 py-1 leading-5 ">{{ customer.name }}</td>
+                    <td class="px-6 py-1 leading-5 ">{{ customer.email }}</td>
+                    <td class="px-6 py-1 leading-5 ">{{ customer.phone }}</td>
+                    <td class="px-6 py-1 leading-5 ">{{ formatDate(customer.updated_at) }}</td>
+                    <td class="px-6 py-1 leading-5 ">{{ formatDate(customer.created_at) }}</td>
+                    <td class="px-6 py-1 leading-5 ">
                         <router-link
                             class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold"
                             :to="{ name: 'customers.show', params: { id: customer.id } }">
@@ -82,6 +82,7 @@
             </template>
             </tbody>
         </table>
+
     </div>
 
 </template>
@@ -91,6 +92,7 @@
 import useCustomers from '@/composables/customers'
 import { onMounted } from 'vue';
 import { formatDate} from '@/helpers/date'
+
 
 
 const { customers, getCustomers, destroyCustomer } = useCustomers()
