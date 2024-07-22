@@ -62,6 +62,8 @@ class ApiDealTest extends TestCase
 
     public function test_update_deal(){
         $data = [
+
+            'customer_id'   => 1,
             'title'         => 'Some show deal',
             'type'          => 'deal show type',
             'is_active'     => true,
@@ -76,6 +78,33 @@ class ApiDealTest extends TestCase
         $dealId = $response->json('data.id');
 
         $response = $this->getJson('api/deals/'. $dealId);
+
+
+
+        $updated_data = [
+
+            'customer_id'   => 1,
+            'title'         => 'Some show deal updated',
+            'type'          => 'deal show type',
+            'is_active'     => true,
+            'active_from'   => '2023-07-21',
+            'active_to'     => '2023-07-21',
+        ];
+
+
+        // $updated_data['title'] = 'Some show deal updated';
+        // $updated_data['customer_id'] = 2;
+
+     //   dd($updated_data);
+
+        $response = $this->putJson('api/deals/'.$dealId, $updated_data);
+
+        $response = $this->getJson('api/deals/'. $dealId);
+        //$response->dump();
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => $updated_data
+            ]);
     }
 
 }

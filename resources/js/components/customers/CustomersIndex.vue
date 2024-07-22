@@ -59,7 +59,7 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
             <template v-for="customer in customers" :key="customer.id">
-                <tr class="bg-white greed_tr">
+                <tr class="bg-white greed_tr tr-data">
                     <td class="px-6 py-1 leading-5 ">{{ customer.id }}</td>
                     <td class="px-6 py-1 leading-5 ">{{ customer.name }}</td>
                     <td class="px-6 py-1 leading-5 ">{{ customer.email }}</td>

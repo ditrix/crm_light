@@ -14,6 +14,17 @@ class DealResouce extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        //return parent::toArray($request);
+
+        return [
+            'id'            => $this->id,
+            'customer_id'   => $this->customer_id,
+            'title'         => $this->title,
+            'type'          => $this->type,
+            'is_active'     => $this->is_active,
+            'active_from'   => $this->active_from,
+            'active_to'     => $this->active_to
+            //'customer'      => CustomerResource::collection($this->customer_id)
+        ];
     }
 }

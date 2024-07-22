@@ -10,8 +10,6 @@ export default function useDeals () {
 
     const deal = ref([]);
 
-
-
     const getDeals = async () => {
         let response = await axios.get('/api/deals');
         deals.value = response.data.data;
@@ -30,20 +28,18 @@ export default function useDeals () {
 
     const updateDeal = async (id) => {
 
-        let response = await axios.put(`/api/deals/${id}`, deal.value);
+        await axios.put(`/api/deals/${id}`, deal.value);
 
-          // перейти по роуту
-        await router.push({ name: 'deals.index' });
+        await router.push({ name: 'customers.show', params: { id: deal.value.customer_id } });
 
     }
 
-    const storeDeal = async (data) => {
+      const storeDeal = async (data) => {
 
         let response = await axios.post(`/api/deals`, data);
-        await router.push({ name: 'deals.index' });
+
+        await router.push({ name: `customers.show/${data.customer_id}` });
     }
-
-
 
     return {
         deals,
@@ -53,5 +49,6 @@ export default function useDeals () {
         showDeal,
         updateDeal,
         storeDeal,
+
     };
 };

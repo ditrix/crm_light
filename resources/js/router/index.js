@@ -41,8 +41,8 @@ const routes = [
     {
         path: '/deals/:id/show',
         name: 'deals.show',
-        title: 'Customers',
-        component: CustomerShow,
+        title: 'Deal',
+        component: DealShow,
         props: true,
     },
     {

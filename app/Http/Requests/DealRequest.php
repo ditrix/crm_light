@@ -25,7 +25,7 @@ class DealRequest extends FormRequest
             'customer_id'   => 'nullable',
             'title'         => 'nullable|string',
             'type'          => 'nullable|string',
-            'is_active'     => 'required|boolean',
+            'is_active'     => 'nullable|boolean',
             'active_from'   => 'nullable|string',
             'active_to'     => 'nullable|string',
         ];

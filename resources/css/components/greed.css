@@ -14,6 +14,6 @@
     /* padding: 0.2rem 0.5rem; */
 }
 
-.grid_table tr:hover {
+.grid_table .tr-data:hover {
     background-color:azure;
 }

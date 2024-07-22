@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DealRequest;
 use App\Http\Resources\DealResouce;
 use App\Models\Deal;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class DealController extends Controller
 {
     public function index()
     {
-        return DealResouce::collection(Deal::all());
+        return DealResouce::collection(Deal::with('customers')->all());
     }
 
     public function store(DealRequest $request)
@@ -27,9 +28,9 @@ class DealController extends Controller
         return new DealResouce($deal);
     }
 
-    public function update(Request $request, Deal $deal)
+    public function update(DealRequest $request, Deal $deal)
     {
-        $deal->update($request->validate());
+        $deal->update($request->validated());
         return new DealResouce($deal);
     }
 

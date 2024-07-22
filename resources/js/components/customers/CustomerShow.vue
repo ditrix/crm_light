@@ -168,16 +168,27 @@
             </tr>
         </thead>
     <template v-for="deal in customer.deals">
-    <tr class="bg-white greed_tr">
+    <tr class="bg-white greed_tr tr-data">
         <td class="px-6 py-1 leading-5 ">{{ deal.id }}</td>
         <td class="px-6 py-1 leading-5 ">{{ deal.type }}</td>
         <td class="px-6 py-1 leading-5 ">{{ deal.title }}</td>
         <td class="px-6 py-1 leading-5 ">{{ deal.is_active }}</td>
-        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.date_from) }}</td>
-        <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.date_to) }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ deal.active_from }}</td>
+        <td class="px-6 py-1 leading-5 ">{{ deal.active_to }}</td>
         <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.updated_at) }}</td>
         <td class="px-6 py-1 leading-5 ">{{ formatDate(deal.created_at) }}</td>
-        <td class="px-6 py-1 leading-5 "></td>
+        <td class="px-6 py-1 leading-5 ">
+            <router-link
+                class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold"
+                :to="{ name: 'deals.show', params: { id: deal.id} }">
+                Edit
+            </router-link>
+            <button
+                class="btn btn_red inline-flex items-center ml-1 px-4 py-2 text-xs font-semiboldtext-sm font-medium"
+                @click="deleteDeal(deal.id)" >
+                X
+            </button>
+        </td>
     </tr>
     </template>
     </table>
@@ -188,10 +199,12 @@
 
 <script setup>
 import useCustomers from '@/composables/customers'
+import useDeals     from '@/composables/deals'
 import { onMounted } from 'vue';
 import { formatDate } from '@/helpers/date'
 
 const { errors, customer, showCustomer, updateCustomer } = useCustomers();
+const { showDeal, destroyDeal } = useDeals();
 
 const props = defineProps({
     id: {
@@ -208,8 +221,18 @@ const saveCustomer = async () => {
 
 }
 
+const deleteDeal = async (id) => {
+    if (!window.confirm('You sure?')) {
+        return
+    }
+    destroyDeal(id);
+    showCustomer(props.id);
+}
+
 onMounted(
     () => showCustomer(props.id)
 );
+
+
 
 </script>
