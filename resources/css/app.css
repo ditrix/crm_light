@@ -2,6 +2,7 @@
 @import "components/greed.css";
 @import "components/helpers.css";
 @import "components/widgets.css";
+@import "components/forms.css";
 
 @tailwind base;
 @tailwind components;

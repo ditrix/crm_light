@@ -67,6 +67,7 @@
                     <td class="px-6 py-1 leading-5 ">{{ formatDate(customer.updated_at) }}</td>
                     <td class="px-6 py-1 leading-5 ">{{ formatDate(customer.created_at) }}</td>
                     <td class="px-6 py-1 leading-5 ">
+                        <div class="table_actions">
                         <router-link
                             class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold"
                             :to="{ name: 'customers.show', params: { id: customer.id } }">
@@ -77,6 +78,7 @@
                             @click="deleteCustomer(customer.id)" >
                             X
                         </button>
+                        </div>
                     </td>
                 </tr>
             </template>

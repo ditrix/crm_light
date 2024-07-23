@@ -46,10 +46,16 @@ const routes = [
         props: true,
     },
     {
-        path: '/deals/create',
+        path: '/deals/store',
         name: 'deals.store',
-        title: 'Customers',
-        component: CustomerCreate
+        title: 'Create deal',
+        component: DealCreate
+    },
+    {
+        path: '/deals/new/:customer_id',
+        name: 'deals.new',
+        props: true,
+        component: DealCreate
     },
 
 ];

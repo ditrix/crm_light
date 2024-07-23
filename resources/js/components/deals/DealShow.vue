@@ -64,7 +64,7 @@
             Save
         </button>
         <router-link
-        class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold"
+        class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold ml_2"
         :to="{ name: 'customers.show', params: { id: deal.customer_id } }">
         Cancel
     </router-link>

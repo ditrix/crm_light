@@ -181,3 +181,401 @@ import {formatDate} from '@/helpers/date'
 @tailwind utilities;
 ...
 
+
+////////////////////
+Для передачи `customerId` в Vue компонент, содержащий форму для создания `Deal`, вы можете использовать несколько подходов в зависимости от того, как ваше приложение организовано. Вот один из распространенных способов:
+
+### 1. Передача через Blade шаблон
+
+Если вы используете Blade для рендеринга Vue компонентов, вы можете передать `customerId` как пропс в ваш Vue компонент.
+
+#### Шаги:
+
+1. **Передайте данные из контроллера в Blade шаблон**:
+
+```php
+// app/Http/Controllers/YourController.php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class YourController extends Controller
+{
+    public function showForm($customerId)
+    {
+        return view('your-view', ['customerId' => $customerId]);
+    }
+}
+```
+
+2. **Используйте данные в Blade шаблоне и передайте их в Vue компонент**:
+
+```blade
+<!-- resources/views/your-view.blade.php -->
+@extends('layouts.app')
+
+@section('content')
+    <div id="app">
+        <deal-form :customer-id="{{ $customerId }}"></deal-form>
+    </div>
+@endsection
+```
+
+3. **Определите пропс в вашем Vue компоненте**:
+
+```vue
+<!-- resources/js/components/DealForm.vue -->
+<template>
+  <form @submit.prevent="submitForm">
+    <!-- Ваши поля формы -->
+    <input type="hidden" v-model="form.customer_id" />
+    <!-- остальные поля формы -->
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+<script>
+export default {
+  props: ['customerId'],
+  data() {
+    return {
+      form: {
+        customer_id: this.customerId,
+        // остальные поля формы
+      }
+    };
+  },
+  methods: {
+    submitForm() {
+      // Логика отправки формы
+      axios.post('/api/deals', this.form)
+        .then(response => {
+          // Обработка успешного ответа
+        })
+        .catch(error => {
+          // Обработка ошибки
+        });
+    }
+  }
+};
+</script>
+```
+
+### 2. Передача через роутинг
+
+Если ваше приложение использует Vue Router, вы можете передавать `customerId` как параметр маршрута.
+
+#### Шаги:
+
+1. **Определите маршрут с параметром**:
+
+```js
+// resources/js/router/index.js
+import Vue from 'vue';
+import Router from 'vue-router';
+import DealForm from '@/components/DealForm.vue';
+
+Vue.use(Router);
+
+export default new Router({
+  routes: [
+    {
+      path: '/customer/:customerId/deal-form',
+      name: 'deal-form',
+      component: DealForm,
+      props: true
+    }
+  ]
+});
+```
+
+2. **Получите параметр в компоненте**:
+
+```vue
+<!-- resources/js/components/DealForm.vue -->
+<template>
+  <form @submit.prevent="submitForm">
+    <!-- Ваши поля формы -->
+    <input type="hidden" v-model="form.customer_id" />
+    <!-- остальные поля формы -->
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+<script>
+export default {
+  props: ['customerId'],
+  data() {
+    return {
+      form: {
+        customer_id: this.customerId,
+        // остальные поля формы
+      }
+    };
+  },
+  methods: {
+    submitForm() {
+      // Логика отправки формы
+      axios.post('/api/deals', this.form)
+        .then(response => {
+          // Обработка успешного ответа
+        })
+        .catch(error => {
+          // Обработка ошибки
+        });
+    }
+  }
+};
+</script>
+```
+
+### 3. Передача через Vuex (если используется Vuex)
+
+Если ваше приложение использует Vuex для управления состоянием, вы можете сохранить `customerId` в хранилище Vuex и получать его в компоненте.
+
+#### Шаги:
+
+1. **Сохраните `customerId` в хранилище**:
+
+```js
+// resources/js/store/index.js
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+  state: {
+    customerId: null
+  },
+  mutations: {
+    setCustomerId(state, customerId) {
+      state.customerId = customerId;
+    }
+  },
+  actions: {
+    updateCustomerId({ commit }, customerId) {
+      commit('setCustomerId', customerId);
+    }
+  }
+});
+```
+
+2. **Получите `customerId` из хранилища в компоненте**:
+
+```vue
+<!-- resources/js/components/DealForm.vue -->
+<template>
+  <form @submit.prevent="submitForm">
+    <!-- Ваши поля формы -->
+    <input type="hidden" v-model="form.customer_id" />
+    <!-- остальные поля формы -->
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  computed: {
+    ...mapState(['customerId'])
+  },
+  data() {
+    return {
+      form: {
+        customer_id: this.customerId,
+        // остальные поля формы
+      }
+    };
+  },
+  methods: {
+    submitForm() {
+      // Логика отправки формы
+      axios.post('/api/deals', this.form)
+        .then(response => {
+          // Обработка успешного ответа
+        })
+        .catch(error => {
+          // Обработка ошибки
+        });
+    }
+  }
+};
+</script>
+```
+
+Выберите подходящий метод в зависимости от архитектуры вашего приложения.
+
+
+
+Вы можете использовать `<router-link>` для перехода к маршруту, который отображает форму создания `Deal`.
+Если вы хотите передать `customerId`, вам нужно включить его в параметры маршрута.
+
+Вот как вы можете это сделать:
+
+1. **Определите маршрут с параметром в Vue Router**:
+
+```js
+// resources/js/router/index.js
+import Vue from 'vue';
+import Router from 'vue-router';
+import DealForm from '@/components/DealForm.vue';
+
+Vue.use(Router);
+
+export default new Router({
+  routes: [
+    {
+      path: '/customer/:customerId/deal-form',
+      name: 'deal-form',
+      component: DealForm,
+      props: true
+    }
+  ]
+});
+```
+
+2. **Используйте `<router-link>` для перехода к маршруту с параметром `customerId`**:
+
+```vue
+<template>
+  <router-link
+    class="btn btn_blue inline-flex items-center px-4 py-2 mr-5 text-xs font-semibold"
+    :to="{ name: 'deal-form', params: { customerId: customerId } }">
+      Create
+  </router-link>
+</template>
+
+<script>
+export default {
+  props: ['customerId'],
+  // остальные свойства компонента
+};
+</script>
+```
+
+3. **Получите `customerId` в компоненте `DealForm` и используйте его в форме**:
+
+```vue
+<template>
+  <form @submit.prevent="submitForm">
+    <!-- Ваши поля формы -->
+    <input type="hidden" v-model="form.customer_id" />
+    <!-- остальные поля формы -->
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+<script>
+export default {
+  props: ['customerId'],
+  data() {
+    return {
+      form: {
+        customer_id: this.customerId,
+        // остальные поля формы
+      }
+    };
+  },
+  methods: {
+    submitForm() {
+      // Логика отправки формы
+      axios.post('/api/deals', this.form)
+        .then(response => {
+          // Обработка успешного ответа
+        })
+        .catch(error => {
+          // Обработка ошибки
+        });
+    }
+  }
+};
+</script>
+```
+
+Теперь при нажатии на кнопку "Create" ваш Vue Router перенаправит вас к компоненту `DealForm`,
+передав в него `customerId` через параметры маршрута. `DealForm` затем сможет использовать `customerId` для создания нового объекта `Deal`.
+
+//////
+В Composition API вместо описания пропсов и использования `data` в объекте компонента, вы будете использовать функции `setup` и `ref` или `reactive` из Vue.
+Вот как можно переписать ваш код с использованием Composition API:
+
+1. **Маршрут и `<router-link>` остаются такими же**:
+
+```vue
+<template>
+  <router-link
+    class="btn btn_blue inline-flex items-center px-4 py-2 mr-5 text-xs font-semibold"
+    :to="{ name: 'deal-form', params: { customerId: customerId } }">
+      Create
+  </router-link>
+</template>
+
+<script>
+export default {
+  props: ['customerId'],
+  // остальные свойства компонента
+};
+</script>
+```
+
+2. **Использование Composition API в компоненте `DealForm`**:
+
+```vue
+<template>
+  <form @submit.prevent="submitForm">
+    <!-- Ваши поля формы -->
+    <input type="hidden" v-model="form.customer_id" />
+    <!-- остальные поля формы -->
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+<script>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+
+export default {
+  props: ['customerId'],
+  setup(props) {
+    const router = useRouter();
+
+    // Используйте ref или reactive для объявления состояния компонента
+    const form = ref({
+      customer_id: props.customerId,
+      // остальные поля формы
+    });
+
+    const submitForm = async () => {
+      try {
+        const response = await axios.post('/api/deals', form.value);
+        // Обработка успешного ответа
+        console.log(response.data);
+      } catch (error) {
+        // Обработка ошибки
+        console.error(error);
+      }
+    };
+
+    return {
+      form,
+      submitForm
+    };
+  }
+};
+</script>
+```
+
+### Объяснение
+
+- `setup` функция используется для инициализации компонента.
+- `props` параметр функции `setup` используется для доступа к пропсам, переданным компоненту.
+- `ref` используется для создания реактивных переменных, которые могут быть использованы в шаблоне.
+- `useRouter` используется для доступа к роутеру, если это необходимо.
+- В `setup` функции мы создаем реактивную переменную `form`, инициализируем её значением из пропса `customerId`.
+- `submitForm` функция выполняет отправку данных формы с помощью `axios`.
+
+Этот подход позволяет использовать преимущества Composition API,
+такие как улучшенная структура и возможность повторного использования логики между компонентами.

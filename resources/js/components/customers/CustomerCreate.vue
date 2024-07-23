@@ -128,10 +128,6 @@ const form = reactive({
 });
 
 const saveCustomer = async () => {
-
-    console.log('saveme');
-
-
     await storeCustomer({ ...form });
 
 }
