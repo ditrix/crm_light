@@ -99,4 +99,10 @@ const form = reactive({
     'active_to'   : '',
 })
 
+const saveDeal = async () => {
+
+    await storeDeal({...form})
+
+}
+
 </script>

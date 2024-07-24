@@ -16,7 +16,7 @@ class DealController extends Controller
         return DealResouce::collection(Deal::with('customers')->all());
     }
 
-    public function store(DealRequest $request, $customerId)
+    public function store(DealRequest $request)
     {
         $deal = Deal::create($request->validated());
 

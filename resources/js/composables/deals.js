@@ -38,7 +38,7 @@ export default function useDeals () {
 
         let response = await axios.post(`/api/deals`, data);
 
-        await router.push({ name: `api.show/${data.customer_id}` });
+        await router.push({ name: 'customers.show', params: { id: data.customer_id } });
     }
 
     return {
