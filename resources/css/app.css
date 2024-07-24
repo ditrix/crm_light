@@ -3,6 +3,7 @@
 @import "components/helpers.css";
 @import "components/widgets.css";
 @import "components/forms.css";
+@import "components/blocks.css";
 
 @tailwind base;
 @tailwind components;

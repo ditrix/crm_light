@@ -1,14 +1,27 @@
 <template>
-    <h3>Customers</h3>
 
-    <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
-        <div class="d-flex mb-4 px-5 mr-1 justify_content_right">
+<div class="d-flex flex-direction_row justify_content_left_space_between align-items_center mb_1">
+    <div class="block_title">Customers</div>
+
+    <div class="d-flex justify_content_right">
             <router-link
                 class="btn btn_blue inline-flex items-center px-4 py-2 mr-5 text-xs font-semibold"
                 :to="{ name: 'customers.store' }" >
                     Create
             </router-link>
         </div>
+</div>
+
+    <!-- <h3>Customers</h3> -->
+
+    <div class="min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md">
+        <!-- <div class="d-flex mb-4 px-5 mr-1 justify_content_right">
+            <router-link
+                class="btn btn_blue inline-flex items-center px-4 py-2 mr-5 text-xs font-semibold"
+                :to="{ name: 'customers.store' }" >
+                    Create
+            </router-link>
+        </div> -->
 
         <table class="min-w-full  border divide-y divide-gray-300 grid_table">
             <thead class="greed_thead">

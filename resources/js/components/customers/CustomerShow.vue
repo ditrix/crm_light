@@ -102,16 +102,18 @@
 </div>
 </form>
 <hr>
-<div class="mt-1 px-4 py-4">
+<div class="mt-1 mb_2 px-4 py-4">
 
-    <div class="">Deals</div>
+    <div class="d-flex flex-direction_row justify_content_left_space_between align-items_center">
+        <div class="block_title">Deals</div>
 
-    <div class="d-flex mb_1 justify_content_right pb_1">
-        <router-link
-            class="btn btn_blue inline-flex items-center px-4 py-2 mb_1 mr-5 text-xs font-semibold"
-            :to="{ name: 'deals.new', params: {customer_id:  props.id}  }" >
-                Create {{ customer.id }}
-        </router-link>
+        <div class="d-flex justify_content_right">
+            <router-link
+                class="btn btn_blue inline-flex items-center px-4 py-2 mb_1 mr-5 text-xs font-semibold"
+                :to="{ name: 'deals.new', params: {customer_id:  props.id}  }" >
+                    Create
+            </router-link>
+        </div>
     </div>
 
     <table class="border grid_table">

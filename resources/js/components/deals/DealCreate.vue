@@ -1,5 +1,5 @@
 <template>
-    Deal create {{ props.customer_id }}
+    <div class="page_title text-xl mb-4">Create deal</div>
     <form class="space-y-6" v-on:submit.prevent="saveDeal">
 
         <div class="space-y-4 rounded-md shadow-sm">
@@ -58,17 +58,18 @@
                 </div>
             </div>
         </div>
-
-        <button
-            type="submit"
-            class="btn btn_green inline-flex items-center ml-1 px-6 py-2 text-xs font-semiboldtext-sm font-medium mt-4">
-            Create
-        </button>
-        <router-link
-            class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold ml_2"
-            :to="{ name: 'customers.show', params: { id: props.customer_id } }">
-            Cancel
-        </router-link>
+        <div  class="mt-4">
+            <button
+                type="submit"
+                class="btn btn_green inline-flex items-center ml-1 px-6 py-2 text-xs font-semiboldtext-sm font-medium mt-4">
+                Create
+            </button>
+            <router-link
+                class="btn btn_gray inline-flex items-center px-4 py-2 text-xs font-semibold ml_2"
+                :to="{ name: 'customers.show', params: { id: props.customer_id } }">
+                Cancel
+            </router-link>
+        </div>
 
     </form>
 
